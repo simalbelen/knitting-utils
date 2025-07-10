@@ -1,0 +1,28 @@
+services:
+  backoffice-web:
+    build:
+      context: ./Frontend
+    expose:
+      - "5173"
+    ports:
+      - "5173:5173"
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+   
+
+  api-leads:
+    build:
+      context: ./VidayLeadsService
+    ports:
+      - "8000:8000"
+    extra_hosts:
+        - host.docker.internal:host-gateway
+    restart: unless-stopped
+   
+
+  
+networks:
+  default:
+    external:
+      name: knitting_network
