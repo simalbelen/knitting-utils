@@ -3,7 +3,10 @@ from pydantic import BaseModel
 from datetime import datetime
 
 class Project(BaseModel):
+    _id: Optional[str]
     name: str
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
+    current_row: int = 0
+    goal_row: int
+    created_at: Optional[datetime]
+    updated_at: Optional[datetime]
 

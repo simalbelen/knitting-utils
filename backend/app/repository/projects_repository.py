@@ -27,19 +27,17 @@ class ProjectsRepository:
             logger.error(e)
             raise HTTPException(status_code=500, detail=str(e))
         
-    def add(self, lead, db=None):            
+    def add_one(self, project, db=None):            
         try:
-            result = db[self.collection].insert_one(lead)
-            lead['_id'] = str(result.inserted_id)
-            return lead  
+            result = db[self.collection].insert_one(project)
+            project['_id'] = str(result.inserted_id)
+            return project  
         except Exception as e:
             logger.error(e)
             raise HTTPException(status_code=500, detail=str(e))
         
     def update(self, query=None , update=None, db=None, upsert=False):
         try:
-            print(query)
-            print(update)
             query = convert_ids_to_objectid(query)
             result =  db[self.collection].update_one(query , update, upsert=upsert)
             return {"success": True, "matched_count": result.matched_count, "modified_count": result.modified_count}
