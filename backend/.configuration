@@ -1,0 +1,4 @@
+DB_NAME=knitting-utils
+MONGO_DETAILS=mongodb://root:rootpassword@mongodb:27018
+LOG_LEVEL= INFO
+SECRET_KEY=sdfsdfgsdgf
