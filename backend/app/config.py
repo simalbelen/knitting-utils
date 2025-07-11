@@ -4,7 +4,7 @@ import os
 
 APP_VERSION = "0.1"
 APP_NAME = "Knitting utils - API"
-API_PREFIX = "/app/api"
+API_PREFIX = "/api"
 
 config = Config(".configuration")
 
