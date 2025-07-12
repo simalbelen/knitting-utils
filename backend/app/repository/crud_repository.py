@@ -36,6 +36,14 @@ class CrudRepository:
             logger.error(e)
             raise HTTPException(status_code=500, detail=str(e))
         
+    def delete_one(self, query=None, db=None):            
+        try:
+            query = convert_ids_to_objectid(query)
+            db[self.collection].delete_one(query)
+        except Exception as e:
+            logger.error(e)
+            raise HTTPException(status_code=500, detail=str(e))
+        
     def update(self, query=None , update=None, db=None, upsert=False):
         try:
             query = convert_ids_to_objectid(query)
