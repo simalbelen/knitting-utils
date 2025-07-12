@@ -11,7 +11,7 @@ const fetchAllProjects = async (): Promise<Project[]> => {
 
 export const useGetProjects = () => {
   return useQuery<Project[], Error>({
-    queryKey: ["getProjects"],
+    queryKey: ["projectList"],
     queryFn: () => fetchAllProjects(),
     initialData: [],
   });

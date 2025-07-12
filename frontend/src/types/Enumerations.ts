@@ -1,22 +1,9 @@
-const Plan = ["standard", "finance", "company"];
-const Interval = ["monthly", "annual"];
-const Country = ["ES", "CL", "CO", "MX"];
-const IdType = ["CIF", "VAT"];
+const StatesValues = ["created", "inProgress", "finished"];
 
-const PlanName = {
-  standard: "Estándar",
-  finance: "Finanzas",
-  company: "Empresa",
+const States = {
+  created: "Creado",
+  inProgress: "En progreso",
+  finished: "Terminado",
 };
 
-const IntervalName = { monthly: "Mensual", annual: "Anual" };
-const CountryName = {
-  ES: "España",
-  CL: "Chile",
-  CO: "Colombia",
-  MX: "México",
-};
-
-const IdTypeName = { CIF: "CIF", VAT: "VAT" };
-
-export { Plan, PlanName, Interval, IntervalName, Country, CountryName, IdType, IdTypeName };
+export { StatesValues, States };

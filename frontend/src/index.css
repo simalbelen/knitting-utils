@@ -1,5 +1,24 @@
 @import "tailwindcss";
 
+@plugin '../hero.ts';
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+
+@theme {
+  --color-primary: #C0C9EE;
+  --color-secondary: #A2AADB;
+  --color-tertiary: #898AC4;
+  --color-accent: #FFF2E0; 
+}
+
+.scroll-hidden {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 html, body {
     width: 100%;
     height: 100%;
@@ -7,7 +26,7 @@ html, body {
 
 :root {
     color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    background-color: #FFF2E0;
 }
 
 #root, #root > div {

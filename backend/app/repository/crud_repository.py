@@ -2,11 +2,11 @@ from app.repository.utils_repository import convert_ids_to_objectid, convert_ids
 from loguru import logger
 from fastapi import HTTPException
 
-class ProjectsRepository:
-    def __init__(self):
-        self.collection = "projects"
+class CrudRepository:
+    def __init__(self, collection_name):
+        self.collection = collection_name
 
-    def find_many(self, query = None, projection = None, db=None, timezone="Europe/Madrid"):            
+    def find_many(self, query = None, projection = None, db=None):            
         try:
             query = convert_ids_to_objectid(query)
             data =  list(db[self.collection].find(query , projection))
@@ -17,7 +17,7 @@ class ProjectsRepository:
             logger.error(e)
             raise HTTPException(status_code=500, detail=str(e))
         
-    def find_one(self, query = None, projection = None, db=None, timezone="Europe/Madrid"):            
+    def find_one(self, query = None, projection = None, db=None):            
         try:
             query = convert_ids_to_objectid(query)
             data =  db[self.collection].find_one(query , projection)
@@ -27,11 +27,11 @@ class ProjectsRepository:
             logger.error(e)
             raise HTTPException(status_code=500, detail=str(e))
         
-    def add_one(self, project, db=None):            
+    def add_one(self, obj, db=None):            
         try:
-            result = db[self.collection].insert_one(project)
-            project['_id'] = str(result.inserted_id)
-            return project  
+            result = db[self.collection].insert_one(obj)
+            obj['_id'] = str(result.inserted_id)
+            return obj  
         except Exception as e:
             logger.error(e)
             raise HTTPException(status_code=500, detail=str(e))

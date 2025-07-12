@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Request
 from app.service.projects_service import ProjectsService
 from app.models.project import Project
+from app.models.section import Section
 
 
 router = APIRouter()
@@ -18,6 +19,7 @@ async def findProject(request: Request, id:str): #, authenticated: bool = Depend
 async def addProject(request: Request, project:Project):
     return projects_service.add_project(project=project, db=request.app.state.db)
 
-@router.patch("/{id}/count")
+@router.patch("/{id}/row")
 async def updateProjectCurrentRow(request: Request, id:str, row:int):
     return projects_service.update_project_current_row(id=id, row=row, db=request.app.state.db)
+
