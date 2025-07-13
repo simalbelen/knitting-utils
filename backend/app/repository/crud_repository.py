@@ -6,21 +6,28 @@ class CrudRepository:
     def __init__(self, collection_name):
         self.collection = collection_name
 
-    def find_many(self, query = None, projection = None, db=None):            
+    def find_many(self, query = None, projection = None, sort = None, db = None):            
         try:
             query = convert_ids_to_objectid(query)
-            data =  list(db[self.collection].find(query , projection))
+            if sort:
+                data = list(db[self.collection].find(query, projection, sort))
+            else:
+                data = list(db[self.collection].find(query, projection))
             data = convert_ids_to_str(data)
-
             return data
         except Exception as e:
             logger.error(e)
             raise HTTPException(status_code=500, detail=str(e))
         
-    def find_one(self, query = None, projection = None, db=None):            
+    def find_one(self, query = None, projection = None, sort = None, db = None):            
         try:
             query = convert_ids_to_objectid(query)
-            data =  db[self.collection].find_one(query , projection)
+            if sort:
+                print(query)
+                print(sort)
+                data = db[self.collection].find_one(query, projection, sort=sort)
+            else:
+                data = db[self.collection].find_one(query, projection)
             data = convert_ids_to_str(data)
             return data
         except Exception as e:
@@ -47,9 +54,25 @@ class CrudRepository:
     def update(self, query=None , update=None, db=None, upsert=False):
         try:
             query = convert_ids_to_objectid(query)
-            result =  db[self.collection].update_one(query , update, upsert=upsert)
+            result = db[self.collection].update_one(query , update, upsert=upsert)
             return {"success": True, "matched_count": result.matched_count, "modified_count": result.modified_count}
         except Exception as e:
             logger.error(e)
             raise HTTPException(status_code=500, detail=str(e))
     
+    def aggregate(self, query=None, field=str, db=None):
+        pipeline = [
+                {
+                    "$match": query  # Filtrar por estado
+                },
+                {
+                    "$group": {
+                        "_id": None,
+                        "total": {"$sum": f"${field}"}  # Sumar campo monto
+                    }
+                }
+            ]
+        print(pipeline)
+        result = list(db[self.collection].aggregate(pipeline))
+        print(result)
+        return result[0]["total"] if result else 0

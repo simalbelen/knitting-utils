@@ -27,7 +27,7 @@ class SectionsService:
         query = {"_id": id}
         self.repository.delete_one(query=query, db=db)
     
-    def find_project_sections(self, id_project, db):
+    def find_sections_by_project(self, id_project, db):
         query = {"project": id_project}
         projection = {"title":1, "current_row":1, "goal_row":1, "status": 1}
         return self.repository.find_many(query=query, projection=projection, db=db)
@@ -45,15 +45,24 @@ class SectionsService:
         if db_section.get("goal_row") != section.goal_row:
             updated_section["goal_row"] = section.goal_row
         if db_section.get("knit_mode") != section.knit_mode:
-            updated_section["knit_mode"] = section.knit_mode
+            updated_section["knit_mode"] = section.knit_mode.model_dump()
         if db_section.get("accent_stitches") != section.accent_stitches:
-            updated_section["accent_stitches"] = section.accent_stitches
+            dict_accent_stitches = [a.model_dump() for a in section.accent_stitches]
+            updated_section["accent_stitches"] = dict_accent_stitches
         update = {
             "$set": updated_section
         }
         return self.repository.update(query=query, update=update, upsert=False, db=db)
 
+    def duplicate_section(self, id:str, db):
+        db_section = self.find_section(id, db)
+        del(db_section["_id"])
+        db_section["title"] = f"{db_section.get('title')} copy"
+        db_section["current_row"] = 0
+        self.add_section(db_section, db)
+
     def update_section_current_row(self, id, row, db):
+        self.find_section(id, db)
         query = {"_id": id}
         update = {
             "$set": {
