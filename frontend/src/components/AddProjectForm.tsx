@@ -1,4 +1,4 @@
-import { Input, Button } from "@heroui/react";
+import { Input, Button, NumberInput, Select, SelectItem } from "@heroui/react";
 import ProjectService from "../services/ProjectService";
 import type { Project } from "../types/Project";
 import { useFormik } from "formik";
@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { NEEDLE_SIZES } from "../types/Enumerations";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
@@ -13,29 +14,54 @@ interface Props {
 }
 function AddProjectForm({ onClose }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const queryClient = useQueryClient();
-  const createProject = async (project: Project) => {
-    const { data } = await ProjectService.createOne(project);
-    console.log(data);
-  };
 
   const validationSchema = yup.object({
     title: yup.string().required("Campo obligatorio"),
     designer: yup.string().required("Campo obligatorio"),
+    needle: yup.string().required("Campo obligatorio"),
+    stitches: yup.number(),
+    rows: yup.number(),
   });
 
   const formik = useFormik({
     initialValues: {
       title: "",
       designer: "",
+      needle: undefined,
+      stitches: undefined,
+      rows: undefined,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setLoading(true);
+      if (values.needle === undefined) {
+        toast.error("Tienes que introducir el número de agujas");
+        return;
+      }
       try {
-        createProject({
+        let stitches = {};
+
+        if (values.stitches != undefined) {
+          stitches = { stitches: values.stitches };
+        }
+        let rows = {};
+        if (values.rows != undefined) {
+          rows = { rows: values.rows };
+        }
+        const gauge = {
+          gauge: {
+            needle: values.needle,
+            ...stitches,
+            ...rows,
+          },
+        };
+        await ProjectService.createOne({
           title: values.title,
           designer: values.designer,
+          status: "created",
+          ...gauge,
         } as Project);
         queryClient.invalidateQueries({ queryKey: ["projectList"] });
         onClose();
@@ -43,7 +69,7 @@ function AddProjectForm({ onClose }: Props) {
         setLoading(false);
         toast.success("Proyecto creado");
       } catch (e: any) {
-        console.log(e);
+        toast.error("Ha ocurrido un error al crear el proyecto");
         setLoading(false);
         if (axios.isAxiosError(e)) {
           toast.error(e.response?.data.detail);
@@ -90,6 +116,83 @@ function AddProjectForm({ onClose }: Props) {
         errorMessage={formik.touched.designer && formik.errors.designer}
         value={formik.values.designer.toString()}
       />
+      <div className="flex gap-4">
+        <Select
+          id="needle"
+          label="Nº de agujas"
+          selectionMode="single"
+          variant="bordered"
+          className="max-w text-accent"
+          classNames={{
+            label: "text-accent",
+            listbox: "bg-tertiary",
+            popoverContent: "bg-tertiary",
+          }}
+          size="lg"
+          value={formik.values.needle}
+          onChange={(e) => {
+            formik.setFieldValue("needle", e.target.value);
+          }}
+          onBlur={() => {
+            formik.setTouched({ ...formik.touched, needle: true });
+          }}
+          selectedKeys={
+            formik.values.needle ? [formik.values.needle] : undefined
+          }
+          isOpen={isOpen}
+          onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
+          isInvalid={
+            !isOpen && formik.touched.needle && formik.errors.needle
+              ? true
+              : false
+          }
+          errorMessage={formik.touched.needle && formik.errors.needle}
+        >
+          {NEEDLE_SIZES.map((size: string) => {
+            return <SelectItem key={size} title={size} />;
+          })}
+        </Select>
+        <div className="border-2 border-accent rounded-2xl flex gap-4 text-xl justify-center items-center px-4">
+          <NumberInput
+            id="stitches"
+            label="Puntos"
+            variant="underlined"
+            hideStepper
+            isWheelDisabled
+            classNames={{
+              label: "text-accent",
+              inputWrapper: "border-accent",
+            }}
+            onValueChange={(newValue) => {
+              formik.setFieldValue("stitches", newValue);
+            }}
+            isInvalid={
+              formik.touched.stitches && formik.errors.stitches ? true : false
+            }
+            errorMessage={formik.touched.stitches && formik.errors.stitches}
+            value={formik.values.stitches}
+          />
+          <span>x</span>
+          <NumberInput
+            id="rows"
+            label="Vueltas"
+            hideStepper
+            isWheelDisabled
+            variant="underlined"
+            classNames={{
+              label: "text-accent",
+              inputWrapper: "border-accent",
+            }}
+            onValueChange={(newValue) => {
+              formik.setFieldValue("rows", newValue);
+            }}
+            isInvalid={formik.touched.rows && formik.errors.rows ? true : false}
+            errorMessage={formik.touched.rows && formik.errors.rows}
+            value={formik.values.rows}
+          />
+        </div>
+      </div>
+
       <div className="flex justify-end items-center gap-4">
         <Button
           variant="bordered"

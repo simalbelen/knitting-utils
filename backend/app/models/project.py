@@ -5,7 +5,7 @@ from typing import Literal
 from typing import Annotated
 from pydantic import AfterValidator, BaseModel
 
-NEEDLE_SIZES = [2.0, 2.25, 2.5, 2.75, 3, 3.25, 3.75, 4, 4.5, 5, 5.5, 6, 8, 10]
+NEEDLE_SIZES = ["2.00", "2.25", "2.50", "2.75", "3.00", "3.25", "3.75", "4.00", "4.50", "5.00", "5.50", "6.00", "8.00", "10.00"]
 
 def is_needle_size(value: float) -> float:
     if value not in NEEDLE_SIZES:
@@ -18,15 +18,15 @@ def is_positive_integer(value: int) -> int:
     return value  
 
 class Gauge(BaseModel):
-    needle: Annotated[float, AfterValidator(is_needle_size)]
-    stitches: Annotated[int, AfterValidator(is_positive_integer)]
-    rows: Annotated[int, AfterValidator(is_positive_integer)]
+    needle: Annotated[str, AfterValidator(is_needle_size)]
+    stitches: Optional[Annotated[int, AfterValidator(is_positive_integer)]] = None
+    rows: Optional[Annotated[int, AfterValidator(is_positive_integer)]] = None
 
 class Project(BaseModel):
     _id: Optional[str]
     title: str
     designer: str
-    gauge: Optional[Gauge] = None
+    gauge: Gauge
     status: Literal["created", "inProgress", "finished"] = "created"
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None

@@ -11,6 +11,8 @@ class ProjectsService:
         now = datetime.now()
         project.created_at = now
         project.updated_at = now  
+        if project.gauge:
+            project.gauge = project.gauge.model_dump()
         return self.repository.add_one(obj = project.model_dump(), db=db)
     
     def update_project(self, id:str, project:Project, db): 
@@ -24,7 +26,7 @@ class ProjectsService:
         if db_project.get("designer") != project.designer:
             updated_project["designer"] = project.designer
         if db_project.get("gauge") != project.gauge:
-            updated_project["gauge"] = project.gauge
+            updated_project["gauge"] = project.gauge.model_dump()
 
         update = {
             "$set": updated_project
@@ -40,6 +42,6 @@ class ProjectsService:
     
     def find_projects(self, db):
         query = {}
-        projection = {"title":1, "designer":1, "status": 1}
+        projection = {"title":1, "designer":1, "status": 1, "gauge":1}
         return self.repository.find_many(query=query, projection=projection, db=db)
     

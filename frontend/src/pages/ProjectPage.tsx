@@ -13,19 +13,12 @@ function ProjectPage() {
   const [goal, setGoal] = useState<number>(0);
 
   const [project, setProject] = useState<Project>();
-  const fetchProject = async () => {
-    if (id) {
-      const { data } = await ProjectService.findOne(id);
-      setProject(data);
-      setCounter(data.current_row);
-      setGoal(data.goal_row);
-    }
-  };
+  const fetchProject = async () => {};
 
   const updateCounter = async (row: number) => {
     if (id) {
       try {
-        await ProjectService.updateCurrentRow(id, row);
+        // await ProjectService.updateCurrentRow(id, row);
       } catch (e: any) {
         console.log(e);
       }

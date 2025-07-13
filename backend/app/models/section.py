@@ -36,7 +36,7 @@ class Section(BaseModel):
     project: Annotated[str, AfterValidator(is_valid_objectid)]
     title: str
     notes: Optional[str] = None
-    current_row: Optional[Annotated[int, AfterValidator(is_positive_integer)]] = 0
+    current_row: Optional[Annotated[int, AfterValidator(is_positive_integer)]] = None
     goal_row: Annotated[int, AfterValidator(is_positive_integer)]
     knit_mode: KnitMode
     accent_stitches: Optional[List[AccentStitch]] = None
