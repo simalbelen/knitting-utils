@@ -11,6 +11,11 @@ def is_positive_integer(value: int) -> int:
         raise ValueError(f'{value} is not a valid integer')
     return value
 
+def is_zero_or_more(value: int) -> int:
+    if value < 0:
+        raise ValueError(f'{value} is not a valid integer')
+    return value
+
 def is_valid_objectid(value: str) -> str:
     try:
         aux = ObjectId(value)
@@ -20,7 +25,7 @@ def is_valid_objectid(value: str) -> str:
 
 class KnitMode(BaseModel):
     knit_flat: bool
-    knit_right_side: bool
+    right_side_even_row: bool
 
 #[empezar desde 0, num] pares, impares, cada x, libre
 class AccentStitch(BaseModel):
@@ -36,7 +41,7 @@ class Section(BaseModel):
     project: Annotated[str, AfterValidator(is_valid_objectid)]
     title: str
     notes: Optional[str] = None
-    current_row: Optional[Annotated[int, AfterValidator(is_positive_integer)]] = None
+    current_row: Optional[Annotated[int, AfterValidator(is_zero_or_more)]] = 0
     goal_row: Annotated[int, AfterValidator(is_positive_integer)]
     knit_mode: KnitMode
     accent_stitches: Optional[List[AccentStitch]] = None

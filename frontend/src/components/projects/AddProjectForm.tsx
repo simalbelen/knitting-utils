@@ -1,12 +1,12 @@
 import { Input, Button, NumberInput, Select, SelectItem } from "@heroui/react";
-import ProjectService from "../services/ProjectService";
-import type { Project } from "../types/Project";
+import ProjectService from "../../services/ProjectService";
+import type { Project } from "../../types/Project";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { NEEDLE_SIZES } from "../types/Enumerations";
+import { NEEDLE_SIZES } from "../../types/Enumerations";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {

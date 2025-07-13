@@ -29,7 +29,7 @@ class SectionsService:
     
     def find_sections_by_project(self, id_project, db):
         query = {"project": id_project}
-        projection = {"title":1, "current_row":1, "goal_row":1, "status": 1}
+        projection = {"title":1, "current_row":1, "goal_row":1, "status": 1, "project": 1}
         return self.repository.find_many(query=query, projection=projection, db=db)
     
     def update_section(self, id:str, section:Section, db):

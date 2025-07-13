@@ -35,13 +35,14 @@ class ProjectsService:
 
     def find_project(self, id, db):
         query = {"_id": id}
-        project = self.repository.find_one(query=query, db=db)
+        projection = {"title":1, "designer":1, "gauge": 1}
+        project = self.repository.find_one(query=query, projection=projection, db=db)
         if project is None:
             raise HTTPException(status_code=404, detail="Not Found")
         return project
     
     def find_projects(self, db):
         query = {}
-        projection = {"title":1, "designer":1, "status": 1, "gauge":1}
+        projection = {"title":1, "designer":1, "status": 1}
         return self.repository.find_many(query=query, projection=projection, db=db)
     

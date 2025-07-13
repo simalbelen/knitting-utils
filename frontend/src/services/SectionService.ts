@@ -12,7 +12,7 @@ const findOne = async (id: string) => {
 };
 
 const createOne= async (section: Section) => {
-  return await API.post<Section>(`${PREFIX}/`, section);
+  return await API.post<Section>(`${PREFIX}`, section);
 };
 
 const duplicateOne= async (id: string) => {
@@ -28,7 +28,7 @@ const deleteOne= async (id: string) => {
 };
 
 const updateCurrentRow= async (id:string, row: number) => {
-  return await API.put<Section>(`${PREFIX}/${id}/row?row=${row}`);
+  return await API.patch<Section>(`${PREFIX}/${id}/row?row=${row}`);
 };
 
 const ProjectService = {

@@ -1,6 +1,5 @@
-import { useDisclosure } from "@heroui/react";
-import { useGetProjects } from "../hooks/useProjects";
-import type { Project } from "../types/Project";
+import { useGetProjects } from "../../hooks/useProjects";
+import type { Project } from "../../types/Project";
 import ProjectCard from "./ProjectCard";
 
 function ProjectsList() {

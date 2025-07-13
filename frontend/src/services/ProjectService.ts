@@ -7,6 +7,10 @@ const findAll = async () => {
   return await API.get<Project[]>(`${PREFIX}/`);
 };
 
+const findOne = async (id: string) => {
+  return await API.get<Project>(`${PREFIX}/${id}/`);
+};
+
 const createOne= async (project: Project) => {
   return await API.post<Project>(`${PREFIX}/`, project);
 };
@@ -17,6 +21,7 @@ const updateOne= async (id:string, project: Project) => {
 
 const ProjectService = {
   findAll,
+  findOne,
   createOne,
   updateOne
 };

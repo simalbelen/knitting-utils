@@ -1,9 +1,9 @@
 import { Chip, useDisclosure } from "@heroui/react";
-import type { Project } from "../types/Project";
+import type { Project } from "../../types/Project";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
-import { States } from "../types/Enumerations";
-import { SettingsIcon } from "./icons/SettingsIcon";
+import { States } from "../../types/Enumerations";
+import { SettingsIcon } from "../icons/SettingsIcon";
 import ProjectModal from "./ProjectModal";
 
 interface Props {
