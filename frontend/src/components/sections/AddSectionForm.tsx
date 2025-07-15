@@ -156,6 +156,9 @@ function AddSectionForm({ onClose, projectId }: Props) {
           label: "text-accent",
           inputWrapper: "border-accent",
         }}
+        onValueChange={(value) => {
+          formik.setFieldValue("notes", value);
+        }}
       />
 
       <div className="flex justify-end items-center gap-4">
