@@ -15,6 +15,7 @@ interface AccentStitch {
 export type Section = {
   _id?: string;
   project: string;
+  project_title?: string;
   title: string;
   notes: string;
   current_row?: number;

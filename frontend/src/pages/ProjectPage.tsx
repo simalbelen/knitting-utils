@@ -23,7 +23,7 @@ function ProjectPage() {
 
   if (project && project._id != undefined) {
     return (
-      <TitleLayout title={`Proyecto: ${project.title}`}>
+      <TitleLayout projectId={id} projectTitle={project.title}>
         <div>
           <AddSectionButton projectId={project._id} />
           <SectionsList projectId={project._id} />

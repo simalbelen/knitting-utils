@@ -7,13 +7,19 @@ from datetime import datetime
 class SectionsService:
     def __init__(self):
         self.repository = CrudRepository("sections")
+        self.project_repository = CrudRepository("projects")
 
     def find_section(self, id:str, db):
         query = {"_id": id}
-        projection = {"project": 0, "created_at": 0, "updated_at": 0}
+        projection = {"created_at": 0, "updated_at": 0}
         section = self.repository.find_one(query=query, projection=projection, db=db)
         if section is None:
             raise HTTPException(status_code=404, detail="Not found")
+        query = {"_id": section.get("project")}
+        projection = {"title":1}
+        section_project = self.project_repository.find_one(query=query, projection=projection, db=db)
+        if section_project:
+            section["project_title"] = section_project.get("title")
         return section
 
     def add_section(self, section:Section, db): 

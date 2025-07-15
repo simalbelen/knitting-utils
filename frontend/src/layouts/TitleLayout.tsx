@@ -1,14 +1,30 @@
-import PageTitle from "../components/atoms/PageTitle";
+import Breadcrumb from "../components/atoms/Breadcrumb";
 
 interface Props {
-  title: string;
+  projectId?: string;
+  projectTitle?: string;
+  sectionId?: string;
+  sectionTitle?: string;
   children: React.ReactNode;
 }
-function TitleLayout({ title, children }: Props) {
+function TitleLayout({
+  projectId,
+  projectTitle,
+  sectionId,
+  sectionTitle,
+  children,
+}: Props) {
   return (
     <div className="h-svh">
-      <PageTitle title={title} />
-      {children}
+      <div className="h-[64px] bg-tertiary flex justify-center items-center text-2xl">
+        <Breadcrumb
+          projectId={projectId}
+          projectTitle={projectTitle}
+          sectionId={sectionId}
+          sectionTitle={sectionTitle}
+        />
+      </div>
+      <div className="h-full">{children}</div>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import PageTitle from "../components/atoms/PageTitle";
 import SectionContent from "../components/sections/SectionContent";
 import { useEffect, useState } from "react";
 import SectionService from "../services/SectionService";
 import type { Section } from "../types/Section";
+import TitleLayout from "../layouts/TitleLayout";
 
 function SectionPage() {
   const { id } = useParams();
@@ -21,10 +21,16 @@ function SectionPage() {
 
   return (
     section && (
-      <div className="flex flex-col h-svh bg-secondary">
-        <PageTitle title={section.title} />
-        <SectionContent section={section} />
-      </div>
+      <TitleLayout
+        projectId={section.project}
+        projectTitle={section.project_title}
+        sectionId={id}
+        sectionTitle={section.title}
+      >
+        <div className="flex flex-col h-full bg-secondary">
+          <SectionContent section={section} />
+        </div>
+      </TitleLayout>
     )
   );
 }

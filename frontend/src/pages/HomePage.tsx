@@ -1,11 +1,10 @@
 import TitleLayout from "../layouts/TitleLayout";
-
 import ProjectsList from "../components/projects/ProjectsList";
 import AddProjectButton from "../components/projects/AddProjectButton";
 
 function HomePage() {
   return (
-    <TitleLayout title="Mis proyectos">
+    <TitleLayout>
       <div>
         <AddProjectButton />
         <ProjectsList />

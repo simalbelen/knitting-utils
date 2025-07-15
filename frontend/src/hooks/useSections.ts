@@ -2,15 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import type { Section } from "../types/Section";
 import SectionService from "../services/SectionService";
 
-const fetchAllProjectSections = async (idProject: string): Promise<Section[]> => {
-  const { data } = await SectionService.findAllInProject(idProject);
+const fetchAllProjectSections = async (projectId: string): Promise<Section[]> => {
+  const { data } = await SectionService.findAllInProject(projectId);
   return data;
 };
 
-export const useGetSections = (idProject: string) => {
+export const useGetSections = (projectId: string) => {
   return useQuery<Section[], Error>({
     queryKey: ["sectionList"],
-    queryFn: () => fetchAllProjectSections(idProject),
+    queryFn: () => fetchAllProjectSections(projectId),
     initialData: [],
   });
 };

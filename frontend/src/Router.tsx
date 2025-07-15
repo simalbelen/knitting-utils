@@ -6,7 +6,7 @@ import SectionPage from "./pages/SectionPage";
 const router = createBrowserRouter([
   { path: "", element: <HomePage /> },
   { path: "project/:id", element: <ProjectPage /> },
-  { path: "project/:idProject/section/:id", element: <SectionPage /> },
+  { path: "project/:projectId/section/:id", element: <SectionPage /> },
 ]);
 
 export default router;
