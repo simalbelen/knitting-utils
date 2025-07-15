@@ -49,7 +49,6 @@ function SectionCard({ section }: Props) {
           handleDuplicate={onOpenDuplicate}
         />
       </div>
-      <div className="bg-accent h-[2px] my-2" />
       <div className="flex justify-end">
         <h3>
           Progreso:{" "}

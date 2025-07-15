@@ -15,7 +15,7 @@ function TitleLayout({
   children,
 }: Props) {
   return (
-    <div className="h-svh">
+    <div className="h-svh flex flex-col">
       <div className="h-[64px] bg-tertiary flex justify-center items-center text-2xl">
         <Breadcrumb
           projectId={projectId}
@@ -24,7 +24,7 @@ function TitleLayout({
           sectionTitle={sectionTitle}
         />
       </div>
-      <div className="h-full">{children}</div>
+      <div className="flex-1 overflow-y-auto">{children}</div>
     </div>
   );
 }

@@ -44,6 +44,7 @@ class ProjectsService:
     
     def find_projects(self, db):
         query = {}
-        projection = {"title":1, "designer":1, "status": 1, "gauge": 1}
-        return self.repository.find_many(query=query, projection=projection, db=db)
+        projection = {"title":1, "designer":1, "status": 1, "gauge": 1, "created_at": 1}
+        projects =  self.repository.find_many(query=query, projection=projection, db=db)
+        return sorted(projects, key=lambda p: p['created_at'], reverse=True)
     

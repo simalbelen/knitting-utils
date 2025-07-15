@@ -1,5 +1,6 @@
 
 from fastapi import HTTPException
+from pymongo import DESCENDING
 from app.models.section import Section
 from app.repository.crud_repository import CrudRepository
 from datetime import datetime
@@ -35,8 +36,9 @@ class SectionsService:
     
     def find_sections_by_project(self, id_project, db):
         query = {"project": id_project}
-        projection = {"title":1, "current_row":1, "goal_row":1, "status": 1, "project": 1}
-        return self.repository.find_many(query=query, projection=projection, db=db)
+        projection = {"title":1, "current_row":1, "goal_row":1, "status": 1, "project": 1, "created_at": 1}
+        sections = self.repository.find_many(query=query, projection=projection, db=db)
+        return sorted(sections, key=lambda s: s['created_at'], reverse=True)
     
     def update_section(self, id:str, section:Section, db):
         db_section = self.find_section(id, db)

@@ -8,7 +8,7 @@ const findAll = async () => {
 };
 
 const findOne = async (id: string) => {
-  return await API.get<Project>(`${PREFIX}/${id}/`);
+  return await API.get<Project>(`${PREFIX}/${id}`);
 };
 
 const createOne= async (project: Project) => {

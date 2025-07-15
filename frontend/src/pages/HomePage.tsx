@@ -5,7 +5,7 @@ import AddProjectButton from "../components/projects/AddProjectButton";
 function HomePage() {
   return (
     <TitleLayout>
-      <div>
+      <div className="h-full">
         <AddProjectButton />
         <ProjectsList />
       </div>
