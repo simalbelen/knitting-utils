@@ -18,7 +18,7 @@ function AddSectionButton({ projectId }: Props) {
         <PlusIcon width={36} height={36} />
       </Button>
       <SectionModal
-        title="Crear una nueva sección"
+        title="Crear sección"
         projectId={projectId}
         isOpen={isOpen}
         onOpenChange={onOpenChange}

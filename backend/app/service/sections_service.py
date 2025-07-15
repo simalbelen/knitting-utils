@@ -36,7 +36,7 @@ class SectionsService:
     
     def find_sections_by_project(self, id_project, db):
         query = {"project": id_project}
-        projection = {"title":1, "current_row":1, "goal_row":1, "status": 1, "project": 1, "created_at": 1}
+        projection = {"title":1, "current_row":1, "goal_row":1, "status": 1, "project": 1, "created_at": 1, "knit_mode":1}
         sections = self.repository.find_many(query=query, projection=projection, db=db)
         return sorted(sections, key=lambda s: s['created_at'], reverse=True)
     
@@ -67,7 +67,8 @@ class SectionsService:
         del(db_section["_id"])
         db_section["title"] = f"{db_section.get('title')} copy"
         db_section["current_row"] = 0
-        self.add_section(db_section, db)
+        print(db_section)
+        self.add_section(Section(**db_section), db)
 
     def update_section_current_row(self, id, row, db):
         self.find_section(id, db)

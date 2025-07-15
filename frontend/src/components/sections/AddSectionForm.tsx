@@ -1,5 +1,4 @@
 import { Input, Button, NumberInput, Checkbox, Textarea } from "@heroui/react";
-import ProjectService from "../../services/ProjectService";
 import type { Section } from "../../types/Section";
 import { useFormik } from "formik";
 import * as yup from "yup";

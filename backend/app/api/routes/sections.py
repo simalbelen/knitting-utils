@@ -31,4 +31,4 @@ async def updateSection(request: Request, id:str, section:Section):
 
 @router.post("/{id}/duplicate")
 async def duplicateSection(request: Request, id:str):
-    return section_service.duplicate_section(id=str, db=request.app.state.db)
+    return section_service.duplicate_section(id, db=request.app.state.db)

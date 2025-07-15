@@ -3,8 +3,8 @@ import type { Project } from "../../types/Project";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { States } from "../../types/Enumerations";
-import { SettingsIcon } from "../icons/SettingsIcon";
 import ProjectModal from "./ProjectModal";
+import { OptionsIcon } from "../icons/OptionsIcon";
 
 interface Props {
   project: Project;
@@ -21,7 +21,7 @@ function ProjectCard({ project }: Props) {
         className="absolute top-2 right-2 hover:cursor-pointer"
         onClick={onOpen}
       >
-        <SettingsIcon width={24} height={24} />
+        <OptionsIcon width={24} height={24} />
       </div>
       <div
         onClick={handleOnClick}
@@ -41,13 +41,13 @@ function ProjectCard({ project }: Props) {
         >
           {States[project.status]}
         </Chip>
-        <ProjectModal
-          title={`Edición de ${project.title}`}
-          project={project}
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-        />
       </div>
+      <ProjectModal
+        title={`Editar proyecto`}
+        project={project}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
     </div>
   );
 }

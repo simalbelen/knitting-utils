@@ -24,7 +24,7 @@ function TitleLayout({
           sectionTitle={sectionTitle}
         />
       </div>
-      <div className="flex-1 overflow-y-auto">{children}</div>
+      <div className="flex-1 overflow-y-auto scroll-hidden">{children}</div>
     </div>
   );
 }

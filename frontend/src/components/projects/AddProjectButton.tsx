@@ -15,7 +15,7 @@ function AddProjectButton() {
         <PlusIcon width={36} height={36} />
       </Button>
       <ProjectModal
-        title="Crear un nuevo proyecto"
+        title="Crear proyecto"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       />
